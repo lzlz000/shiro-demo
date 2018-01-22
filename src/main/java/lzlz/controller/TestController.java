@@ -88,8 +88,6 @@ public class TestController {
                 .stream()
                 .map(TestDO::toString)
                 .reduce((prev,add)->prev+System.lineSeparator()+add).orElse("");
-        System.out.println(result);
-
         return new ModelAndView("test/common-test").addObject("value", result);
     }
 }
