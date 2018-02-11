@@ -1,13 +1,11 @@
 package lzlz.controller;
 
 import lzlz.entity.CommonMessage;
-import lzlz.entity.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 试验长轮询的功能
@@ -17,27 +15,25 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @RequestMapping("polling")
 public class LongPollingTestController {
-    final Map<String,CommonMessage> requestBodyMap  = new ConcurrentHashMap<>();
-    final Map<String,DeferredResult<CommonMessage>> responseBodyMap  = new ConcurrentHashMap<>();
+    private final List<DeferredResult<CommonMessage>> responseList = new CopyOnWriteArrayList<>();
 
     @PostMapping("chat")
     @ResponseBody
-    public DeferredResult<CommonMessage> chat(@RequestBody CommonMessage req){
-        DeferredResult<CommonMessage> result =new DeferredResult<>(10000l);//10秒
+    public DeferredResult<CommonMessage> chat(){
+        DeferredResult<CommonMessage> result =new DeferredResult<>(10000L);//10秒
         result.onTimeout(()->{
-            CommonMessage resp = new CommonMessage();
-            resp.setErrmessage("time out!");
-            result.setResult(resp);
+            CommonMessage msg = new CommonMessage();
+            msg.setErrmessage("time out!");
+            result.setResult(msg);
+            responseList.remove(result);//从list中删除此内容
         });//超时任务
-        requestBodyMap.put("1", req);// 把请求放到第一个请求map中
-        responseBodyMap.put("1", result);// 把请求响应的DeferredResult实体放到第一个响应map中
+        responseList.add(result);// 把请求响应的DeferredResult实体放到第一个响应List中
         return result;
     }
-//    @PostMapping("send")
-//    @ResponseBody
-//    public DeferredResult<CommonMessage> send(@RequestBody CommonMessage msg){
-//        requestBodyMap.put("1", msg);// 把请求放到第一个请求map中
-//        responseBodyMap.put("1", result);// 把请求响应的DeferredResult实体放到第一个响应map中
-//        return result;
-//    }
+    //@RequestBody需要接的参数是一个string化的json，直接传递json不需要此注解
+    @PostMapping("send")
+    public int send(CommonMessage msg){
+        responseList.forEach(value->value.setResult(msg));
+        return 0;
+    }
 }
