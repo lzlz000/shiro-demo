@@ -1,4 +1,4 @@
-package lzlz.entity;
+package lzlzgame.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

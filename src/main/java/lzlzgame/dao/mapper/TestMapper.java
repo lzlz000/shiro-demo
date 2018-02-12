@@ -1,6 +1,6 @@
-package lzlz.dao.mapper;
+package lzlzgame.dao.mapper;
 
-import lzlz.dao.entity.TestDO;
+import lzlzgame.dao.entity.TestDO;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 

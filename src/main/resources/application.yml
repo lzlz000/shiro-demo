@@ -6,7 +6,7 @@ server:
 
 ### mybatis配置
 mybatis:
-    type-aliases-package: com.fzk.money.dao.entity
+    type-aliases-package: lzlzgame.dao.entity
     mapper-locations: classpath:mapper/*.xml
 
 mapper:

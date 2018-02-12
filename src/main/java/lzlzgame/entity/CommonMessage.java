@@ -1,12 +1,10 @@
-package lzlz.entity;
+package lzlzgame.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class CommonMessage {
-    String message;
+    String text;
     String errmessage;
     Object data;
 }

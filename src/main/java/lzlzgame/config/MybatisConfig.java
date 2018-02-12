@@ -1,4 +1,4 @@
-package lzlz.config;
+package lzlzgame.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

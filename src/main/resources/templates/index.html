@@ -16,13 +16,18 @@
             if(data.message){
                 console.log(data.message);
             }
-            poll();
         })
     }
-    poll();
+    function subscribe(channel) {
+        $.post('/polling/subscribe',{
+            text:channel
+        },function (e) {
+            console.log(e);
+        })
+    }
     function send(text) {
         $.post('/polling/send',{
-            message:text
+            text:text
         },function (e) {
             console.log(e);
         })

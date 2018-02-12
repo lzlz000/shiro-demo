@@ -1,4 +1,4 @@
-package lzlz.config;
+package lzlzgame.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;

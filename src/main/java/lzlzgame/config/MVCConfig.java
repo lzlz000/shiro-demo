@@ -1,6 +1,6 @@
-package lzlz.config;
+package lzlzgame.config;
 
-import lzlz.interceptor.MyInterceptor;
+import lzlzgame.interceptor.MyInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
