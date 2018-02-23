@@ -13,8 +13,10 @@
     function poll() {
         console.log('poll');
         $.post('/polling/chat',function(data){
-            if(data.message){
-                console.log(data.message);
+            if(data.text){
+                console.log(data.text);
+            }else if(data.errmessage){
+                console.log(data.errmessage);
             }
         })
     }
@@ -25,12 +27,29 @@
             console.log(e);
         })
     }
-    function send(text) {
-        $.post('/polling/send',{
-            text:text
+    function unsubscribe(channel) {
+        $.post('/polling/subscribe',{
+            text:channel
         },function (e) {
             console.log(e);
         })
+    }
+    function send(channel,text) {
+        $.ajax({
+            url:"/polling/send",
+            type: "POST",
+            data: JSON.stringify({
+                channel:channel,
+                message:{
+                    text:text
+                }
+            }),
+            success: function (e) {
+                console.log(e);
+            },
+            dataType: "json",
+            contentType: "application/json"
+        });
     }
 </script>
 </body>
