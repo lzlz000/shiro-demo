@@ -2,9 +2,11 @@ package lzlzgame.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class CommonMessage {
+public class CommonMessage implements Serializable {
     String text;
     String errmessage;
-    Object data;
+    Serializable data;
 }

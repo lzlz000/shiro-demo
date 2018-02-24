@@ -11,25 +11,28 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script>
     function poll() {
-        console.log('poll');
         $.post('/polling/chat',function(data){
             if(data.text){
                 console.log(data.text);
             }else if(data.errmessage){
                 console.log(data.errmessage);
             }
+            poll();
         })
     }
+    poll();
+    console.log('poll');
+
     function subscribe(channel) {
         $.post('/polling/subscribe',{
-            text:channel
+            channel:channel
         },function (e) {
             console.log(e);
         })
     }
     function unsubscribe(channel) {
-        $.post('/polling/subscribe',{
-            text:channel
+        $.post('/polling/unsubscribe',{
+            channel:channel
         },function (e) {
             console.log(e);
         })

@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class User {
     String id;
     String name;
+    long saveTime;
 }
