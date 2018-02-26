@@ -1,13 +1,22 @@
 package lzlzgame;
 
-import lzlzgame.entity.CommonMessage;
-import org.junit.Test;
 
 public class Test1 {
-    @Test
-    public void test1(){
-        CommonMessage messge = new CommonMessage();
-        messge.setText("aaa");
-        System.out.println(messge.getText());
+    private static boolean ready;
+    private static int number;
+    private static class ReaderThread extends Thread {
+        @Override
+        public void run() {
+            while(!ready) {
+                System.out.println(number);
+            }
+            System.out.println(number);
+        }
+    }
+    public static void main(String[] args) throws Exception {
+        new ReaderThread().start();
+        Thread.sleep(1);
+        number = 42;
+        ready = true;
     }
 }

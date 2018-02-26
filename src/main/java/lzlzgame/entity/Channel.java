@@ -11,5 +11,5 @@ import java.util.Set;
 @AllArgsConstructor
 public class Channel {
     String name;
-    Set<User> subscriptionSet;
+    Set<IMUser> subscriptionSet;
 }

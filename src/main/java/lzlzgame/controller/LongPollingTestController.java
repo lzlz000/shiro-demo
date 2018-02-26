@@ -2,8 +2,8 @@ package lzlzgame.controller;
 
 import lzlzgame.entity.CommonMessage;
 import lzlzgame.entity.SendMessage;
-import lzlzgame.service.IM.ChannelService;
-import lzlzgame.service.UserService;
+import lzlzgame.service.im.ChannelService;
+import lzlzgame.service.im.IMUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -23,25 +23,25 @@ public class LongPollingTestController {
     @Autowired
     private ChannelService channelService;
     @Autowired
-    private UserService userService;
+    private IMUserService userService;
 
     //长轮询
     @PostMapping("chat")
     @ResponseBody
     public DeferredResult<CommonMessage> chat(HttpServletRequest req){
-        return channelService.poll(userService.getSessionUser(req.getSession()));
+        return channelService.poll(userService.getIMUser(req.getSession()));
     }
 
     //订阅
     @PostMapping("subscribe")
     public String subscribe(HttpServletRequest req,SendMessage channel){
-        channelService.subscribe(channel.getChannel(),userService.getSessionUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
+        channelService.subscribe(channel.getChannel(),userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
         return "订阅成功";
     }
     //取消订阅
     @PostMapping("unsubscribe")
     public String unsubscribe(HttpServletRequest req,SendMessage channel){
-        channelService.unsubscribe(channel.getChannel(),userService.getSessionUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
+        channelService.unsubscribe(channel.getChannel(),userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
         return "取消订阅";
     }
 
@@ -53,7 +53,7 @@ public class LongPollingTestController {
      */
     @PostMapping("send")
     public String send(HttpServletRequest req, @RequestBody SendMessage msg){
-        msg.setSender(userService.getSessionUser(req.getSession()));
+        msg.setSender(userService.getIMUser(req.getSession()));
         channelService.emit(msg.getChannel(),msg.getSender(),msg.getMessage());
         return "发送成功";
     }
