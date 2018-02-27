@@ -11,16 +11,9 @@ import org.springframework.web.context.request.async.DeferredResult;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
-/**
- * 试验长轮询的功能
- * createBy lzlzgame at 2018/2/10 15:35
- * @author : lzlzgame
- */
 @RestController
-@RequestMapping("polling")
-public class LongPollingTestController {
-
+@RequestMapping("/im")
+public class IMController {
     @Autowired
     private ChannelService channelService;
     @Autowired
@@ -31,12 +24,6 @@ public class LongPollingTestController {
     @ResponseBody
     public DeferredResult<List<CommonMessage>> poll(HttpServletRequest req){
         return channelService.poll(userService.getIMUser(req.getSession()));
-    }
-    @PostMapping("pollTest")
-    public DeferredResult<String> pollTest(){
-        DeferredResult<String> result = new DeferredResult<>();
-        result.setResult("pollTest");
-        return result;
     }
 
     //订阅
@@ -58,8 +45,8 @@ public class LongPollingTestController {
     of bean class [lzlzgame.entity.SendMessage]: Property referenced in indexed property path
     'message[text]' is neither an array nor a List nor a Map;
      */
-    @PostMapping("send")
-    public String send(HttpServletRequest req, @RequestBody SendMessage msg){
+    @PostMapping("emit")
+    public String emit(HttpServletRequest req, @RequestBody SendMessage msg){
         msg.setSender(userService.getIMUser(req.getSession()));
         channelService.emit(msg.getChannel(),msg.getSender(),msg.getMessage());
         return "发送成功";

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class IMUserService {
@@ -31,16 +32,16 @@ public class IMUserService {
      * @param expire 过期时间，<=0代表不会过期
      */
     private IMUser getIMUser(HttpSession session,int expire){
-        IMUser user =(IMUser)session.getAttribute("user");
+        IMUser user =(IMUser)session.getAttribute("imUser");
         if(user != null&&user.getSaveTime()<= new Date().getTime()){//如果过期 则从session中删除用户
-            session.removeAttribute("user");
+            session.removeAttribute("imUser");
             user = null;
         }
         if (user == null) {
             user = new IMUser();//测试时User的作用仅仅是作为map的key所以new一个即可
-            user.setId(session.getId());
+            user.setId(UUID.randomUUID().toString());
             user.setSaveTime(new Date().getTime()+expire);//设置过期时间
-            session.setAttribute("user",user);
+            session.setAttribute("imUser",user);
         }
         user.setExpire(expire);
         return user;
