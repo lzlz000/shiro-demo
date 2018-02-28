@@ -42,7 +42,7 @@ spring:
         password: QWERDF595182653QWERDF595182653
     ##数据库连接
     datasource:
-        url: jdbc:mysql://111.231.14.53:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true
+        url: jdbc:mysql://111.231.14.53:3306/lzlz?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true
         username: vcoin
         password: QWERDF595182653
         driver-class-name: com.mysql.jdbc.Driver

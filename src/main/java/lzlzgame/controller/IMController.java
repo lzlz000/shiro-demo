@@ -30,13 +30,18 @@ public class IMController {
     @PostMapping("subscribe")
     public String subscribe(HttpServletRequest req,SendMessage channel){
         channelService.subscribe(channel.getChannel(),userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
-        return "订阅成功";
+        return "订阅"+channel.getChannel()+"成功";
     }
     //取消订阅
     @PostMapping("unsubscribe")
     public String unsubscribe(HttpServletRequest req,SendMessage channel){
-        channelService.unsubscribe(channel.getChannel(),userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
-        return "取消订阅";
+        if (channel != null&&channel.getChannel()!=null) {
+            channelService.unsubscribe(channel.getChannel(),userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
+            return "取消订阅:"+channel.getChannel();
+        }else{
+            channelService.unsubscribe(userService.getIMUser(req.getSession()));//测试时User的作用仅仅是作为map的key所以new一个即可
+            return "取消订阅全部频道";
+        }
     }
 
     /*

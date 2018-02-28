@@ -50,7 +50,9 @@ public class ChannelService implements IChannelService{
 
     @Override
     public void unsubscribe(IMUser user) {
-        channelMap.values().forEach(channel -> channel.getSubscriptionSet().remove(user));
+        if (user != null) {
+            channelMap.values().forEach(channel -> channel.getSubscriptionSet().remove(user));
+        }
     }
 
     @Override
