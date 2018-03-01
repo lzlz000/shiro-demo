@@ -5,6 +5,37 @@
     <title>Login</title>
 </head>
 <body>
-
+错误信息：
+<h4 id="erro"></h4>
+<form>
+    <p>
+        <label for="username">账号：</label>
+        <input type="text" name="username" id="username" value="admin" />
+    </p>
+    <p>
+        <label for="password">密码：</label>
+        <input type="text" name="password" id="password" value="123" />
+    </p>
+    <p>
+        <input type="button" id="ajaxLogin" value="登录" />
+    </p>
+</form>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $("#ajaxLogin").click(function() {
+        $.post("/ajaxLogin", {
+            "username" : username,
+            "password" : password
+        }, function(result) {
+            if (result.status === 200) {
+                location.href = "/index";
+            } else {
+                $("#erro").html(result.message);
+            }
+        });
+    });
+</script>
 </body>
 </html>

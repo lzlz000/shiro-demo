@@ -21,8 +21,9 @@ public class ChannelService implements IChannelService{
     @Autowired
     IMUserService imUserService;
 
-    private final Map<String,ResultSender> resultMap = new ConcurrentHashMap<>();
-    //不应向外部提供任何Channel的引用
+    //用户ID与ResultListener映射
+    private final Map<String,ResultListener> resultMap = new ConcurrentHashMap<>();
+    //用户ID与频道的映射
     private final Map<String,Channel> channelMap = new ConcurrentHashMap<>();
 
     @Override
@@ -82,9 +83,9 @@ public class ChannelService implements IChannelService{
      */
     @Override
     public DeferredResult<List<CommonMessage>> poll(IMUser receiver){
-        ResultSender sender = resultMap.get(receiver.getId());
+        ResultListener sender = resultMap.get(receiver.getId());
         if (sender==null) {
-            sender = new ResultSender();
+            sender = new ResultListener();
             resultMap.put(receiver.getId(),sender);
         }
         return sender.poll();
@@ -92,7 +93,7 @@ public class ChannelService implements IChannelService{
 
 
     private void send(IMUser receiver, CommonMessage message){
-        ResultSender sender = resultMap.get(receiver.getId());
+        ResultListener sender = resultMap.get(receiver.getId());
         if (sender != null) {
             sender.send(message);
         }
