@@ -14,6 +14,7 @@ public class EmbeddedServletContainerConfig{
 
         return container -> {
             container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400"));
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/error/403"));
             container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
         };

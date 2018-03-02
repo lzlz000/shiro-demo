@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>index</title>
     <link rel="Stylesheet" type="text/css" href="/static/css/style.css"/>
 </head>
 <body>
-<h1 th:text="${hello}"></h1>
+<h1>长轮询通讯测试</h1>
+<p>im.js包括4个方法，通过IM.xxx调用</p>
+<!-- 用于测试时候使用jquery函数 -->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/js/im.js"></script>
+<script>
+    IM.poll();
+</script>
 </body>
 </html>

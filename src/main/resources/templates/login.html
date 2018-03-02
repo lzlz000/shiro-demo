@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Login</title>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css"/>
 </head>
+<style>
+    input{
+        color:#454545;
+    }
+</style>
 <body>
 错误信息：
 <h4 id="erro"></h4>
@@ -22,10 +28,10 @@
 </form>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    var username = $("#username").val();
-    var password = $("#password").val();
     $("#ajaxLogin").click(function() {
-        $.post("/ajaxLogin", {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.post("/login", {
             "username" : username,
             "password" : password
         }, function(result) {

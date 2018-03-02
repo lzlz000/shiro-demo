@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>common-test</title>
+    <title th:text="${code}"></title>
     <link rel="Stylesheet" type="text/css" href="/static/css/style.css"/>
 </head>
 <body>
-<pre th:utext="${value}" style="font-size: 16px;"></pre>
+    <h1 ><span th:text="${code}"></span></h1>
+    <p th:text="${message}"></p>
 </body>
 </html>

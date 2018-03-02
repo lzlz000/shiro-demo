@@ -33,8 +33,10 @@ public class TestController {
     @Autowired
     private TestMapper testMapper;
 
-    @Autowired
-
+    @RequestMapping("im")
+    public String testIM() {
+        return "test/im";
+    }
     @RequestMapping("db")
     public ModelAndView testDb() {
 
