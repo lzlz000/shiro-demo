@@ -1,4 +1,4 @@
-package lzlzgame.entity;
+package lzlzgame.entity.im;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ public class IMUser {
     String name;
     long saveTime;
     /**
-     * 过期时间，<=0即不过期
+     * 过期时间 ms，<=0即不过期
      */
     int expire;
 

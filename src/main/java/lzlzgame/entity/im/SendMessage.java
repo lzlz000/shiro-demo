@@ -1,6 +1,7 @@
-package lzlzgame.entity;
+package lzlzgame.entity.im;
 
 import lombok.Data;
+import lzlzgame.entity.CommonMessage;
 
 @Data
 public class SendMessage {

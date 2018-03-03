@@ -1,6 +1,6 @@
 package lzlzgame.service.im;
 
-import lzlzgame.entity.IMUser;
+import lzlzgame.entity.im.IMUser;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;

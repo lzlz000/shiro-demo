@@ -1,6 +1,6 @@
-package lzlzgame.dao.mapper;
+package lzlzgame.dao.mapper.security;
 
-import lzlzgame.dao.entity.Role;
+import lzlzgame.dao.entity.security.Role;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;

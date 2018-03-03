@@ -1,7 +1,7 @@
 package lzlzgame.service.im;
 
 import lzlzgame.entity.CommonMessage;
-import lzlzgame.entity.IMUser;
+import lzlzgame.entity.im.IMUser;
 import org.springframework.web.context.request.async.DeferredResult;
 
 public interface IChannelService {

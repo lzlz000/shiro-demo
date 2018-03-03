@@ -1,7 +1,7 @@
 package lzlzgame.controller;
 
 import lzlzgame.entity.CommonMessage;
-import lzlzgame.entity.SendMessage;
+import lzlzgame.entity.im.SendMessage;
 import lzlzgame.service.im.ChannelService;
 import lzlzgame.service.im.IMUserService;
 import org.springframework.beans.factory.annotation.Autowired;

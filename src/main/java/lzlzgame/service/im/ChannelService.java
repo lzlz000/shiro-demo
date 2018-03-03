@@ -1,8 +1,8 @@
 package lzlzgame.service.im;
 
-import lzlzgame.entity.Channel;
+import lzlzgame.entity.im.Channel;
 import lzlzgame.entity.CommonMessage;
-import lzlzgame.entity.IMUser;
+import lzlzgame.entity.im.IMUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;

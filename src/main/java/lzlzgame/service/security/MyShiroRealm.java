@@ -1,9 +1,10 @@
-package lzlzgame.service;
+package lzlzgame.service.security;
 
-import lzlzgame.dao.entity.Role;
-import lzlzgame.dao.entity.User;
-import lzlzgame.dao.mapper.RoleMapper;
-import lzlzgame.dao.mapper.UserMapper;
+import lzlzgame.dao.entity.security.Role;
+import lzlzgame.dao.entity.security.User;
+import lzlzgame.dao.mapper.security.RoleMapper;
+import lzlzgame.dao.mapper.security.UserMapper;
+import lzlzgame.entity.MySecurityUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -13,6 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,9 +28,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     //授权 （角色）
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        User user =(User)SecurityUtils.getSubject().getPrincipal();
-        List<String> roles = roleMapper.selectRolesByUserId(user.getId()).stream()
-                .map(Role::getName).collect(Collectors.toList());
+        MySecurityUser user =(MySecurityUser)SecurityUtils.getSubject().getPrincipal();
+        Collection<String> roles = user.getRoles();
+        if (roles==null) {
+            roles = roleMapper.selectRolesByUserId(user.getId()).stream()
+                    .map(Role::getName).collect(Collectors.toSet());
+            user.setRoles(roles);
+        }
         SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
         info.addRoles(roles);
         return info;
@@ -40,9 +46,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
         List<User> userList = userMapper.login(token.getUsername(),new String(token.getPassword()));
-        User user = null;
+        MySecurityUser user = null;
         if (userList.size()>0) {
-            user =  userList.get(0);
+            user =  new MySecurityUser(userList.get(0));
         }
         if (user==null) {
             throw new AccountException("帐号或密码不正确！");

@@ -1,8 +1,9 @@
-package lzlzgame.entity;
+package lzlzgame.entity.im;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lzlzgame.entity.im.IMUser;
 
 import java.util.Set;
 
