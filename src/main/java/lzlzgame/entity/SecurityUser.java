@@ -4,12 +4,16 @@ import lzlzgame.dao.entity.security.User;
 
 import java.util.Collection;
 
-public class MySecurityUser {
+/**
+ *
+ */
+public class SecurityUser {
     private final User user;
 
     private Collection<String> roles;
+    private Collection<String> permissions;
 
-    public MySecurityUser(User user){
+    public SecurityUser(User user){
         this.user = user;
     }
 
@@ -26,5 +30,13 @@ public class MySecurityUser {
 
     public void setRoles(Collection<String> roles) {
         this.roles = roles;
+    }
+
+    public Collection<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Collection<String> permissions) {
+        this.permissions = permissions;
     }
 }

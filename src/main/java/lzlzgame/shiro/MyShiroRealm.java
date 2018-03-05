@@ -1,10 +1,10 @@
-package lzlzgame.service.security;
+package lzlzgame.shiro;
 
 import lzlzgame.dao.entity.security.Role;
 import lzlzgame.dao.entity.security.User;
 import lzlzgame.dao.mapper.security.RoleMapper;
 import lzlzgame.dao.mapper.security.UserMapper;
-import lzlzgame.entity.MySecurityUser;
+import lzlzgame.entity.SecurityUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -28,7 +28,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     //授权 （角色）
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        MySecurityUser user =(MySecurityUser)SecurityUtils.getSubject().getPrincipal();
+        SecurityUser user =(SecurityUser)SecurityUtils.getSubject().getPrincipal();
         Collection<String> roles = user.getRoles();
         if (roles==null) {
             roles = roleMapper.selectRolesByUserId(user.getId()).stream()
@@ -46,9 +46,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
         List<User> userList = userMapper.login(token.getUsername(),new String(token.getPassword()));
-        MySecurityUser user = null;
+        SecurityUser user = null;
         if (userList.size()>0) {
-            user =  new MySecurityUser(userList.get(0));
+            user =  new SecurityUser(userList.get(0));
         }
         if (user==null) {
             throw new AccountException("帐号或密码不正确！");

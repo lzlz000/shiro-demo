@@ -1,6 +1,6 @@
 package lzlzgame.config;
 
-import lzlzgame.service.security.MyShiroRealm;
+import lzlzgame.shiro.MyShiroRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -33,11 +33,11 @@ public class ShiroConfig {
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
 
-        // 拦截器.
+        // 拦截器. LinkedHashMap是有序的 能保证拦截URL的先后顺序
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
         //参考 http://www.cppblog.com/guojingjia2006/archive/2014/05/14/206956.html
