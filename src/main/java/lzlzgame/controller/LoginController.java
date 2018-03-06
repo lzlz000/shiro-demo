@@ -3,6 +3,7 @@ package lzlzgame.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
+import lzlzgame.service.LoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -26,6 +27,8 @@ public class LoginController {
     private static final String VERIFY_KEY=Constants.KAPTCHA_SESSION_KEY+"_LOGIN";
     @Autowired
     private DefaultKaptcha captchaProducer;
+    @Autowired
+    private LoginService loginService;
 
     @GetMapping("/login")
     public String login() {
@@ -47,8 +50,7 @@ public class LoginController {
             //如果验证码正确
             if(verifyText!=null&&verifyText.equals(verify)){
                 request.getSession().setAttribute(VERIFY_KEY, null);
-                UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-                SecurityUtils.getSubject().login(token);
+                loginService.login(username, password);
                 resultMap.put("status", 200);
                 resultMap.put("message", "登录成功");
             }else{

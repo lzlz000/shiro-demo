@@ -1,5 +1,6 @@
 package lzlzgame.config;
 
+import lzlzgame.filter.SingleLoginSessionFilter;
 import lzlzgame.shiro.MyShiroRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,7 +38,9 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
-
+        Map<String,Filter> filterMap= shiroFilterFactoryBean.getFilters();
+        //自定义单用户登录filter
+        filterMap.put("authc",new SingleLoginSessionFilter());
         // 拦截器. LinkedHashMap是有序的 能保证拦截URL的先后顺序
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断

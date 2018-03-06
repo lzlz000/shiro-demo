@@ -10,4 +10,5 @@ POST操作既不是安全的，也不是幂等的，比如常见的POST重复加
 - [已解决]验证码
 - shiro登录数量 
 （自定义filter如何通过ShiroFilterFactoryBean 而不是xml配置）
+- 外部位置文件存取
 - 邀请码用户注册
