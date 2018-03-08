@@ -49,7 +49,7 @@ spring:
 ###日志
 logging:
     level:
-        root: debug
+        root: info
         o.s.c: info
         o.s.core: info
         org.apache.http: info

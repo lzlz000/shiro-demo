@@ -11,6 +11,9 @@ import org.springframework.web.context.request.async.DeferredResult;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 长轮询即时通讯Controller
+ */
 @RestController
 @RequestMapping("/im")
 public class IMController {

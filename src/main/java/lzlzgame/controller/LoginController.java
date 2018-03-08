@@ -4,9 +4,7 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
 import lzlzgame.service.LoginService;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +28,24 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    /**
+     * 登录界面
+     */
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
     /**
-     *
+     * post提交登录信息
      * @param username 用户名
      * @param password 密码
      * @param verify 验证码
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String,Object> submitLogin(String username, String password, String verify,HttpServletRequest request) {
+    public Map<String,Object> submitLogin(String username, String password, String verify,
+                                          HttpServletRequest request) {
         Map<String, Object> resultMap = new LinkedHashMap<>();
         try {
             String verifyText = (String)request.getSession().getAttribute(VERIFY_KEY);
@@ -64,6 +66,7 @@ public class LoginController {
         return resultMap;
     }
 
+    //获取登录验证码
     @GetMapping("/login/verify")
     public void getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

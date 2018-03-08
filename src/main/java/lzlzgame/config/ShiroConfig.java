@@ -1,6 +1,6 @@
 package lzlzgame.config;
 
-import lzlzgame.filter.SingleLoginSessionFilter;
+import lzlzgame.filter.KickoutFilter;
 import lzlzgame.shiro.MyShiroRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-
 
     /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
@@ -35,32 +34,33 @@ public class ShiroConfig {
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+//        shiroFilterFactoryBean.setSuccessUrl("/user");
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
-        Map<String,Filter> filterMap= shiroFilterFactoryBean.getFilters();
-        //自定义单用户登录filter
-        filterMap.put("authc",new SingleLoginSessionFilter());
+        shiroFilterFactoryBean.setUnauthorizedUrl("/err/403");
         // 拦截器. LinkedHashMap是有序的 能保证拦截URL的先后顺序
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
         //参考 http://www.cppblog.com/guojingjia2006/archive/2014/05/14/206956.html
         filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/index", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/error/*", "anon");
-        filterChainDefinitionMap.put("/login/*", "anon");
+        filterChainDefinitionMap.put("/err/*", "anon");
+        filterChainDefinitionMap.put("/login/**", "anon");
 
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
 
-        filterChainDefinitionMap.put("/admin/**", "roles[ADMIN]");
-        filterChainDefinitionMap.put("/test/**", "roles[SUPER]");
+        filterChainDefinitionMap.put("/admin/**", "kickout,roles[ADMIN]");
+        filterChainDefinitionMap.put("/test/**", "kickout,roles[SUPER]");
 
         // <!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/**", "kickout,authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        Map<String,Filter> filterMap= shiroFilterFactoryBean.getFilters();
+        //自定义单用户登录filter
+        filterMap.put("kickout", new KickoutFilter());
         return shiroFilterFactoryBean;
     }
 
@@ -68,7 +68,7 @@ public class ShiroConfig {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
-        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm( myShiroRealm());
         return securityManager;
     }
 
@@ -79,5 +79,10 @@ public class ShiroConfig {
     public Realm myShiroRealm() {
         return new MyShiroRealm();
     }
+
+//    @Bean
+//    public Filter kickoutFilter() {
+//        return new KickoutFilter();
+//    }
 
 }
