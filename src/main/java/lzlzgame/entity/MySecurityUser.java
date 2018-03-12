@@ -2,18 +2,19 @@ package lzlzgame.entity;
 
 import lzlzgame.dao.entity.security.User;
 
-import java.util.Collection;
+import java.util.Set;
+
 
 /**
  *
  */
-public class SecurityUser {
+public class MySecurityUser {
     private final User user;
 
-    private Collection<String> roles;
-    private Collection<String> permissions;
+    private Set<String> roles;
+    private Set<String> permissions;
 
-    public SecurityUser(User user){
+    public MySecurityUser(User user){
         this.user = user;
     }
 
@@ -24,19 +25,19 @@ public class SecurityUser {
         return user.getPassword();
     }
 
-    public Collection<String> getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<String> roles) {
+    public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
 
-    public Collection<String> getPermissions() {
+    public Set<String> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Collection<String> permissions) {
+    public void setPermissions(Set<String> permissions) {
         this.permissions = permissions;
     }
 }

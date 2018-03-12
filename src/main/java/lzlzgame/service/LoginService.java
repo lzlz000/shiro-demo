@@ -1,6 +1,6 @@
 package lzlzgame.service;
 
-import lzlzgame.entity.SecurityUser;
+import lzlzgame.entity.MySecurityUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -26,7 +26,7 @@ public class LoginService {
     public void login(String username, String password){
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         SecurityUtils.getSubject().login(token);
-        SecurityUser user =(SecurityUser)SecurityUtils.getSubject().getPrincipal();
+        MySecurityUser user =(MySecurityUser)SecurityUtils.getSubject().getPrincipal();
         singleLogin(String.valueOf(user.getId()));
     }
     /**
@@ -42,7 +42,7 @@ public class LoginService {
         String key = REDIS_KEY_PREFIX+userId;
         Map<Serializable,String> loginSessionIdMap = hashOps.entries(key);
         loginSessionIdMap.forEach((loginSessionId,isKickOut)->{
-            //如果sessionId不是当前的Session的，加入kickOut标志
+            //如果sessionId不是当前的Session的，加入kickout标志
             if (!loginSessionId.equals(sessionId)) {
                 hashOps.put(key,loginSessionId,KICKOUT_TAG);
             }
@@ -57,7 +57,7 @@ public class LoginService {
      */
     public boolean kickout(){
         Subject subject = SecurityUtils.getSubject();
-        SecurityUser user =(SecurityUser)subject.getPrincipal();
+        MySecurityUser user =(MySecurityUser)subject.getPrincipal();
         String userId = String.valueOf(user.getId());
         Serializable sessionId = subject.getSession().getId();
 

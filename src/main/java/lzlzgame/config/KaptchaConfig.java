@@ -25,7 +25,6 @@ public class KaptchaConfig {
         properties.setProperty("kaptcha.image.height", "35");
 //        properties.setProperty("kaptcha.session.key", "code");//不在这里配置 手动加入session
         properties.setProperty("kaptcha.textproducer.char.length", "6");
-//        properties.setProperty("kaptcha.textproducer.char.string", "0123456789ABCEF");
         properties.setProperty("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");
         properties.setProperty("kaptcha.noise.impl", "com.google.code.kaptcha.impl.NoNoise");
         properties.setProperty("kaptcha.background.clear.from", "white");
