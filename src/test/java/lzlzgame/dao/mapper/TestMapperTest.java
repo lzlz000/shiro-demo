@@ -1,6 +1,7 @@
 package lzlzgame.dao.mapper;
 
 import lzlzgame.ApplicationBoot;
+import lzlzgame.service.PageHelperTestService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestMapperTest {
     @Autowired
     TestMapper testMapper;
+    @Autowired
+    PageHelperTestService pageHelperTestService;
 
     @Test
     public void testShow() {
-        testMapper.selectTest(2).forEach(System.out::println);
+        pageHelperTestService.pagingUser(1,2).forEach(System.out::println);
+        pageHelperTestService.pagingUser(2,2).forEach(System.out::println);
     }
 
 }

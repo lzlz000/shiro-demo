@@ -18,13 +18,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service
 public class ChannelService implements IChannelService{
-    @Autowired
-    IMUserService imUserService;
+    private final IMUserService imUserService;
 
     //用户ID与ResultListener映射
     private final Map<String,ResultListener> resultMap = new ConcurrentHashMap<>();
     //用户ID与频道的映射
     private final Map<String,Channel> channelMap = new ConcurrentHashMap<>();
+
+    @Autowired
+    public ChannelService(IMUserService imUserService) {
+        this.imUserService = imUserService;
+    }
 
     @Override
     public void subscribe(String channelName, IMUser user) {
