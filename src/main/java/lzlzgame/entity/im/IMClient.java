@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 即时通讯用户
+ * 即时通讯客户端
  */
 @Data
 @NoArgsConstructor
-public class IMUser {
+public class IMClient {
     String id;
     String name;
     long saveTime;

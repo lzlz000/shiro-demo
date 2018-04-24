@@ -1,7 +1,7 @@
 package lzlzgame.service.im;
 
 import lzlzgame.entity.CommonMessage;
-import lzlzgame.entity.im.IMUser;
+import lzlzgame.entity.im.IMClient;
 import org.springframework.web.context.request.async.DeferredResult;
 
 public interface IChannelService {
@@ -10,28 +10,28 @@ public interface IChannelService {
      * @param channelName 频道名
      * @param user 用户
      */
-    void subscribe(String channelName, IMUser user);
+    void subscribe(String channelName, IMClient user);
     /**
      * 取消订阅频道
      * @param channelName 频道名
      * @param user 用户
      */
-    void unsubscribe(String channelName, IMUser user);
+    void unsubscribe(String channelName, IMClient user);
     /**
      * 取消订阅所有频道
      * @param user 用户
      */
-    void unsubscribe(IMUser user);
+    void unsubscribe(IMClient user);
     /**
      * 发送
      * @param channelName 频道名
      * @param sender 发送者
      */
-    void emit(String channelName, IMUser sender, CommonMessage Data);
+    void emit(String channelName, IMClient sender, CommonMessage Data);
 
     /**
      * 长轮询
      * @param receiver 接受者
      */
-    DeferredResult poll(IMUser receiver);
+    DeferredResult poll(IMClient receiver);
 }

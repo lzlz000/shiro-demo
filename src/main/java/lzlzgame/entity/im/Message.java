@@ -4,8 +4,8 @@ import lombok.Data;
 import lzlzgame.entity.CommonMessage;
 
 @Data
-public class SendMessage {
+public class Message {
     String channel;
-    IMUser sender;
+    IMClient sender;
     CommonMessage message;
 }
