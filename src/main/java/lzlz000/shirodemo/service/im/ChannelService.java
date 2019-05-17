@@ -84,11 +84,8 @@ public class ChannelService implements IChannelService{
      */
     @Override
     public DeferredResult<List<CommonMessage>> poll(IMClient receiver){
-        IMMessageQueue queue = resultMap.get(receiver.getId());
-        if (queue==null) {
-            queue = new IMMessageQueue();
-            resultMap.put(receiver.getId(),queue);
-        }
+        IMMessageQueue queue = resultMap.computeIfAbsent(receiver.getId(), key-> new IMMessageQueue());
+        resultMap.put(receiver.getId(),queue);
         return queue.poll();
     }
 

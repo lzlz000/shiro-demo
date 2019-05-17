@@ -7,6 +7,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 长轮询消息队列
@@ -19,14 +20,14 @@ import java.util.List;
  * @author : lzlz
  */
 public class IMMessageQueue {
-    private DeferredResult<List<CommonMessage>> result;
+    private volatile DeferredResult<List<CommonMessage>> result;
 
     //使用linkedList 作为消息队列
-    private final LinkedList<CommonMessage> messageQueue = new LinkedList<>();
+    private final LinkedBlockingQueue<CommonMessage> queue = new LinkedBlockingQueue<>();
 
 
-    public synchronized void send(CommonMessage message){
-        messageQueue.add(message);
+    public void send(CommonMessage message){
+        queue.offer(message);
         flush();
     }
     public DeferredResult<List<CommonMessage>> poll(){
@@ -37,10 +38,14 @@ public class IMMessageQueue {
     }
 
     private synchronized void flush(){
-        if (result!=null&&!result.hasResult()&&messageQueue.size()>0) {
-            //这里需要拷贝一份消息，因为此处为异步调用，而在当前线程中，messageQueue的引用随后将被clear()
-            result.setResult(new ArrayList<>(messageQueue));
-            messageQueue.clear();
+        if (result!=null&&!result.hasResult()) {
+            List<CommonMessage> messages = new LinkedList<>();
+            CommonMessage msg;
+            while ((msg = queue.poll())!=null){
+                messages.add(msg);
+            }
+            if (messages.size()>0)
+                result.setResult(messages);
         }
     }
 
