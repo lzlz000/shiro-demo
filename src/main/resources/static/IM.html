@@ -6,10 +6,14 @@
     <link rel="Stylesheet" type="text/css" href="/static/css/style.css"/>
 </head>
 <body>
-<h1>长轮询通讯测试</h1>
-<p>im.js包括4个方法，通过IM.xxx调用</p>
+<h1>长轮询通讯测试1</h1>
+<p>im.js包括4个方法，通过IM.xxxx调用</p>
 <input id="input-subscribe" placeholder="订阅指定频道"/>
 <button id="btn-subscribe">订阅</button>
+<br>
+<input id="input-channel" placeholder="频道"/>
+<input id="input-message" placeholder="消息"/>
+<button id="btn-send">发送</button>
 <div id="content">
 
 </div>
@@ -18,11 +22,13 @@
 <script src="/static/js/im.js"></script>
 <script>
     const callback = (data)=>{
-        let content = "";
+        let received = "";
         for (let i = 0; i < data.length; i++) {
-            content+=`<p>${data.text}</p>`
+            received+=`<div>${data[i].text}</div>`
         }
-        $("#content").append(content);
+        const $content = $("#content");
+        $content.html($content.html()+received);
+
     };
     IM.poll(callback);
     const $input = $("#input-subscribe");
@@ -30,6 +36,11 @@
         console.log("订阅频道：", $input.val());
         IM.subscribe($input.val());
         $input.val("");
+    });
+    $("#btn-send").click(function(){
+        const $input1 = $("#input-channel");
+        const $input2 = $("#input-message");
+        IM.send($input1.val(),$input2.val());
     });
 </script>
 </body>

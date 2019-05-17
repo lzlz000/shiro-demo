@@ -13,3 +13,6 @@ body{
     font-family: mononokiregular,"Microsoft YaHei UI",serif;
     color:#ffffff
 }
+button,input{
+    color:black;
+}

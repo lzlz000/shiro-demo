@@ -1,16 +1,19 @@
 /**
  * 长轮询即时通讯
  */
-var IM =(function(jQuery){
-    var $ =jQuery;
+const IM =(function(jQuery){
+    const $ =jQuery;
     return {
-        poll : function() {
+        poll : function(callback) {
             $.ajax({
                 url:"/im/poll",
                 type: "POST",
                 success: function (data) {
                     console.log(JSON.stringify(data));
-                    IM.poll();
+                    if (data && callback){
+                        callback(data);
+                    }
+                    IM.poll(callback);
                 },
                 error: function (err) {
                     console.log(JSON.stringify(err));
@@ -27,7 +30,7 @@ var IM =(function(jQuery){
             })
         },
         unsubscribe : function (channelName) {
-            var channel = channelName?{channel:channelName}:null;
+            let channel = channelName?{channel:channelName}:null;
             $.post('/im/unsubscribe',channel,function (e) {
                 console.log(e);
             })
