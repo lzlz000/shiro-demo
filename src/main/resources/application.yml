@@ -40,9 +40,9 @@ spring:
         password: 123456
     ##数据库连接
     datasource:
-        url: jdbc:mysql://47.98.143.33:3306/lz?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true
+        url: jdbc:mysql://localhost:3306/my-test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp
         username: root
-        password: QWERDF595182653
+        password: root
         driver-class-name: com.mysql.jdbc.Driver
 ###日志
 logging:
